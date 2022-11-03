@@ -1,5 +1,3 @@
-import java.util.Locale;
-
 public class StringLoops
 {
     public StringLoops() { }
@@ -46,42 +44,20 @@ public class StringLoops
         return vowels;
     }
 
-    /* Returns the number of times "searchString" appears in "origString";
-     matches should NOT be case sensitive.
-
-     Examples:
-     - if searchString = "an" and origString = "Apples and bananas",
-       this method returns 3: Apples and bananas
-     - if searchString = "tat" and origString = "Ratatattat",
-       this method returns 3: Ratatattat (note that two overlap)
-     - if searchString = "lower" and origString = "sunflower",
-       this method returns 1: sunflower
-     - if searchString = "haha" and origString = "Hahahahaha",
-       this method returns 4: Hahahahaha
- (note that two overlap)
-     - if searchString = "HAHA" and origString = "Hahahahaha",
-       this method returns 4: Hahahahaha (note that two overlap)
-     - if searchString = "rain" and origString = "it’s the brain drain pain train",
-       this method returns 3: it’s the brain drain pain train
-     - if searchString = "was" and origString = "I was about to call you, wasn’t I?",
-       this method returns 2
-     - if searchString = "but" and origString = "I was about to call you, wasn’t I?",
-       this method returns 0
-     - if searchString = "i" and origString = "Supercalifragilisticexpialidocious",
-       this method returns 7
-    */
     public int countString(String searchString, String origString)
     {
         int numTimes = 0;
         String lowerCaseString = origString.toLowerCase();
+        String searchStringLower = searchString.toLowerCase();
 
         int i = 0;
         int index = 0;
+        String newString = lowerCaseString;
         while (index != -1) {
-            String newString = lowerCaseString.substring(i);
-            index = lowerCaseString.indexOf(searchString);
+            newString = newString.substring(i);
+            index = newString.indexOf(searchStringLower);
 
-            if (newString.contains(searchString)) {
+            if (newString.contains(searchStringLower)) {
                 numTimes++;
                 i = index + 1;
             }
@@ -89,5 +65,29 @@ public class StringLoops
         return numTimes;
     }
 
+    public String removeString(String searchString, String origString)
+    {
+        int i = origString.indexOf(searchString);
+        String updatedStr = origString;
+        int searchStrLength = searchString.length();
+        while (i != -1) {
+            updatedStr = updatedStr.substring(0,i) + updatedStr.substring(i + searchStrLength);
+            i = updatedStr.indexOf(searchString);
+        }
+        return updatedStr;
+    }
 
+    public String replaceCharacter(String searchChar, String origStr, String replaceChar)
+    {
+        String updatedStr = "";
+        for (int i = 0; i < origStr.length(); i++) {
+            String orgStrLetter = origStr.charAt(i) + "";
+            if (orgStrLetter.equals(searchChar)) {
+                updatedStr += replaceChar;
+            } else {
+                updatedStr += orgStrLetter;
+            }
+        }
+        return updatedStr;
+    }
 }
